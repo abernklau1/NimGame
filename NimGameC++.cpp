@@ -22,7 +22,7 @@ int main() {
     int turn = rand() % 2; 
     int mode = rand() % 2; 
 
-    // PROCESS - play the game of NIM taking turns
+    //Game starts
     cout << "***** Game of NIM Starts *****" << endl;
     
     // if there are still balls left, then keep playing
@@ -133,13 +133,13 @@ int computerStupid (int numBall) {
 //Function for computer smart
 int computerSmart (int numBall) {
     
-    //list of power of two minus one numbers (x^2-1)
+    //list power of 2 minus 1 numbers (#^2-1)
     int numList[] = {3, 7, 15, 31, 63};
     
     //Loops through list from biggest to smallest
     for (int i = 9; i >= 0; i--) {
         
-        //If the current number of balls is >= twoPowerList[i], calculates # to pick
+        //If the current number of balls is >= numList[i], calculates # to pick
         if (numBall >= numList[i]) {
             int computerInput = numBall - numList[i];
          numBall = numBall - computerInput;
@@ -148,7 +148,7 @@ int computerSmart (int numBall) {
         }
     }
     
-    // If numBall is not greater than any power of two minus one, play randomly
+    // If numBall is not greater than any numList, play randomly
     int computerInput = rand() %  (numBall / 2) + 1;
     numBall = numBall - computerInput;
     cout << "Computer chooses: " << computerInput << endl;
