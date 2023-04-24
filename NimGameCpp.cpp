@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iostream>
 #include <vector>
+#include <limits>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ int main()
   // Starts the random number generator and changes it for each game
   srand( time( nullptr ) );
 
-  // Randomizes inital ball coount between 10 - 100
+  // Randomizes inital ball count between 10 - 100
   int numBall = rand() % 91 + 10;
 
   // Randomizes inital turn and mode
@@ -33,15 +34,15 @@ int main()
   {
     cout << "\tBall count: " << numBall << endl;
 
-    // Determins if its the players turn and follows the correct function
+    // Determines if it's the player's turn and follows the correct function
     if ( turn == 0 )
     {
       cout << "\nPLAYER TURN" << endl;
       numBall = playerTurn( numBall );
-      turn    = 1; // switch the turn 1 - for computer turn next
+      turn    = 1; // switch the turn to 1 for computer turn next
     }
 
-    // Determins the computers turn, mode and follows the correct function
+    // Determines the computer's turn, mode, and follows the correct function
     else
     {
       if ( mode == 0 )
@@ -57,12 +58,12 @@ int main()
       turn = 0;
     }
 
-    // Switchs turn to 0 to make it players turn
+    // Switch turn to 0 to make it player's turn
   }
 
   cout << "\tBall count: " << numBall << endl;
 
-  // IF and ELSE statments used to output the game winner
+  // IF and ELSE statements used to output the game winner
   if ( turn == 0 && numBall == 0 )
   {
     cout << "\n***** GAME of NIM Winner! PLAYER *****\n\n";
@@ -76,17 +77,20 @@ int main()
   return 0;
 }
 
-// Function for players turn
+// Function for player's turn
 int playerTurn( int numBall )
 {
   int playerInput;
   cout << "\nInsert Number Here: ";
   while ( !( cin >> playerInput ) || ( playerInput <= 0 || ( playerInput > ceil( numBall / 2 ) && playerInput != 1 ) ) )
   {
+    
     if ( cin.fail() || ( playerInput <= 0 || ( playerInput > ceil( numBall / 2 ) && playerInput != 1 ) ) )
     {
       cout << "******INSERT A VALID NUMBER.******\n";
       cout << "\nInsert Number Here: ";
+      cin.clear();
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
       continue;
     }
   }
@@ -94,24 +98,19 @@ int playerTurn( int numBall )
   return numBall;
 }
 
-// Function for computer stupid
+// Function for computer's turn (stupid mode)
 int computerStupid( int numBall )
 {
   int computerInput;
   if ( numBall > 1 )
   {
-    // Randomizes how many ball(s) computer takes and updates ball count /w output
+    // Randomizes how many ball(s) computer takes and updates ball count with output
     computerInput = rand() % ( numBall / 2 ) + 1;
   }
   else
   {
     computerInput = 1;
   }
-
-  numBall = numBall - computerInput;
-  cout << "  Computer chooses: " << computerInput << " ball(s)." << endl;
-  // Returns ball count
-  return numBall;
 }
 
 // Function for computer smart
@@ -143,7 +142,7 @@ int computerSmart( int numBall )
   }
 
   numBall -= computerInput;
-  cout << "  Computer chooses: " << computerInput << endl;
+  cout << "Computer chose: " << computerInput << endl;
   // Return the new numBall
   return numBall;
 }
