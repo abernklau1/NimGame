@@ -2,8 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-#include <vector>
 #include <limits>
+#include <vector>
 
 using namespace std;
 
@@ -11,6 +11,8 @@ using namespace std;
 int playerTurn( int numBall );
 int computerStupid( int numBall );
 int computerSmart( int numBall );
+bool isAllDigits( const string& input );
+bool isInRange( const string& input, const int& numBall );
 
 int main()
 {
@@ -80,21 +82,22 @@ int main()
 // Function for player's turn
 int playerTurn( int numBall )
 {
-  int playerInput;
+  string playerInput;
   cout << "\nInsert Number Here: ";
-  while ( !( cin >> playerInput ) || ( playerInput <= 0 || ( playerInput > ceil( numBall / 2 ) && playerInput != 1 ) ) )
+  while ( !( getline( cin, playerInput ) ) || !isAllDigits( playerInput ) || !isInRange( playerInput, numBall ) )
   {
-    
-    if ( cin.fail() || ( playerInput <= 0 || ( playerInput > ceil( numBall / 2 ) && playerInput != 1 ) ) )
+    // Checks if input is not correct; if condition is met, clears the cin function and ignores the rest of the stream
+    if ( cin.fail() || !isAllDigits( playerInput ) || !isInRange( playerInput, numBall ) )
     {
+      cin.clear();
+      cin.ignore( numeric_limits<streamsize>::max(), '\n' );
       cout << "******INSERT A VALID NUMBER.******\n";
       cout << "\nInsert Number Here: ";
-      cin.clear();
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
       continue;
     }
   }
-  numBall -= playerInput;
+
+  numBall -= stoi( playerInput );
   return numBall;
 }
 
@@ -111,6 +114,11 @@ int computerStupid( int numBall )
   {
     computerInput = 1;
   }
+
+  numBall = numBall - computerInput;
+  cout << "  Computer chooses: " << computerInput << " ball(s)." << endl;
+  // Returns ball count
+  return numBall;
 }
 
 // Function for computer smart
@@ -145,4 +153,44 @@ int computerSmart( int numBall )
   cout << "Computer chose: " << computerInput << endl;
   // Return the new numBall
   return numBall;
+}
+
+// Function to check if a string contains only digits
+bool isAllDigits( const string& input )
+{
+  bool result = true; // Initialize the result flag to true
+
+  // Iterate through each character in the string
+  for ( char ch : input )
+  {
+    if ( !isdigit( ch ) )
+    { // Check if the character is not a digit
+
+      result = false; // If not, set the result flag to false
+
+      break; // Break out of the loop early since non-digit found
+    }
+  }
+
+  return result; // Return the result flag
+}
+
+// Function to check if player's input is within range of the rules
+bool isInRange( const string& input, const int& numBall )
+{
+  // Changes user input to an integer
+  int intInput = stoi( input );
+
+  // initializes a bool to true
+  bool result = true;
+
+  // Checks if the integer is less than or equal to zero or the integer is greater than half the pile and not equal to one
+  if ( intInput <= 0 || ( intInput > ceil( numBall / 2 ) && intInput != 1 ) )
+  {
+    // Changes result to false if condition is met
+    result = false;
+  }
+
+  // Returns the result
+  return result;
 }
