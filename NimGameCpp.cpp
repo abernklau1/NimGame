@@ -2,8 +2,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-#include <limits>
-#include <sstream>
 #include <vector>
 
 using namespace std;
@@ -100,7 +98,7 @@ int playerTurn( int numBall )
     // Clears the cin function
     cin.clear();
 
-    cout << "\n******INSERT A VALID NUMBER.******\n";
+    cout << "\n***** INSERT A VALID NUMBER *****\n";
   } while ( true );
 
   numBall -= stoi( playerInput );
