@@ -84,21 +84,24 @@ int main()
 int playerTurn( int numBall )
 {
   string playerInput;
-  cout << "\nInsert Number Here: ";
-  while ( getline( cin, playerInput ) || cin.peek() == '\n' || !isAllDigits( playerInput ) || !isInRange( playerInput, numBall ) )
-  {
-    cout << "This is Player Input after: " << playerInput << endl;
-    // Checks if input is not correct; if condition is met, clears the cin function and ignores the rest of the stream
-    if ( cin.fail() || cin.peek() == '\n' || !isAllDigits( playerInput ) || !isInRange( playerInput, numBall ) )
-    {
-      cout << "******INSERT A VALID NUMBER.******\n";
-      cout << "\nInsert Number Here: ";
-      cin.clear();
-      cin.ignore( numeric_limits<streamsize>::max(), '\n' );
 
-      continue;
+  // Loops through user input until user input's a valid number
+  do
+  {
+    cout << "\nInsert Number Here: ";
+    getline( cin, playerInput );
+
+    // Checks if the player input is not empty and is all digits and is in the viable range, breaks if conditions are met
+    if ( !playerInput.empty() && isAllDigits( playerInput ) && isInRange( playerInput, numBall ) )
+    {
+      break;
     }
-  }
+
+    // Clears the cin function
+    cin.clear();
+
+    cout << "\n******INSERT A VALID NUMBER.******\n";
+  } while ( true );
 
   numBall -= stoi( playerInput );
   return numBall;
