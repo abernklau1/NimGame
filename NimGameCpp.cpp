@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iostream>
 #include <limits>
+#include <sstream>
 #include <vector>
 
 using namespace std;
@@ -84,15 +85,17 @@ int playerTurn( int numBall )
 {
   string playerInput;
   cout << "\nInsert Number Here: ";
-  while ( !( getline( cin, playerInput ) ) || !isAllDigits( playerInput ) || !isInRange( playerInput, numBall ) )
+  while ( getline( cin, playerInput ) || cin.peek() == '\n' || !isAllDigits( playerInput ) || !isInRange( playerInput, numBall ) )
   {
+    cout << "This is Player Input after: " << playerInput << endl;
     // Checks if input is not correct; if condition is met, clears the cin function and ignores the rest of the stream
-    if ( cin.fail() || !isAllDigits( playerInput ) || !isInRange( playerInput, numBall ) )
+    if ( cin.fail() || cin.peek() == '\n' || !isAllDigits( playerInput ) || !isInRange( playerInput, numBall ) )
     {
-      cin.clear();
-      cin.ignore( numeric_limits<streamsize>::max(), '\n' );
       cout << "******INSERT A VALID NUMBER.******\n";
       cout << "\nInsert Number Here: ";
+      cin.clear();
+      cin.ignore( numeric_limits<streamsize>::max(), '\n' );
+
       continue;
     }
   }
