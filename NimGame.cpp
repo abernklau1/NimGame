@@ -120,7 +120,7 @@ int computerStupid( int numBall )
   }
 
   numBall = numBall - computerInput;
-  cout << "  Computer chooses: " << computerInput << " ball(s)." << endl;
+  cout << "Computer chose: " << computerInput << endl;
   // Returns ball count
   return numBall;
 }
