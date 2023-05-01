@@ -1,6 +1,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 #include <iostream>
 #include <vector>
 
@@ -120,7 +121,7 @@ int computerStupid( int numBall )
   }
 
   numBall = numBall - computerInput;
-  cout << "Computer chose: " << computerInput << endl;
+  cout << "\n    Computer chose: " << computerInput << endl;
   // Returns ball count
   return numBall;
 }
@@ -154,7 +155,7 @@ int computerSmart( int numBall )
   }
 
   numBall -= computerInput;
-  cout << "Computer chose: " << computerInput << endl;
+  cout << "\n    Computer chose: " << computerInput << endl;
   // Return the new numBall
   return numBall;
 }
